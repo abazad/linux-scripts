@@ -38,12 +38,9 @@ ln -s /bin/true /sbin/initctl
 
 # MAKE CHANGES / ADD PACKAGES
 #----------------------------
-# Add i386 Architecture
+# Add i386 Architecture and Extra Repositories (Needed to slipstream certain packages into ISO)
 dpkg --add-architecture i386
-apt-get update
-
-# Add Extra Repositories (Needed to slipstream certain packages into ISO)
-add-apt-repository "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) main universe restricted multiverse"
+add-apt-repository "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) universe multiverse"
 apt-get update
 
 # Remove All Bloat
@@ -77,7 +74,7 @@ apt-get update
 # apt get -y remove transmission-common transmission-gtk
 
 # Remove Amazon Icon from Unity Menu
-rm -rf /usr/share/applications/ubuntu-amazon-default.desktop
+# rm -rf /usr/share/applications/ubuntu-amazon-default.desktop
 
 # Install Git
 apt-get -y install git
@@ -88,6 +85,9 @@ apt-get -y install p7zip-full p7zip-rar
 # Install Packages for SuperR's Kitchen
 apt-get -y install gawk lzop liblz4-tool bison gperf build-essential zlib1g-dev zlib1g-dev:i386 g++-multilib libxml2-utils bzip2 libbz2-dev libbz2-1.0 libghc-bzlib-dev libsepol1-dev dpkg-dev make ccache automake squashfs-tools schedtool
 
+# Install Packaged for Android Studio
+apt-get -y install libc6:i386 libncurses5:i386 libstdc++6:i386 lib32z1
+
 # Install Java
 apt-get -y install default-jdk
 
@@ -95,7 +95,7 @@ apt-get -y install default-jdk
 apt-get -y install unity-tweak-tool gnome-tweak-tool
 
 # Install Google Chrome
-wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
+wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
 apt-get update
 apt-get -y install google-chrome-stable
